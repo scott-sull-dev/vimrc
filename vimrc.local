@@ -1,0 +1,106 @@
+" For local use, copy this file to .vimrc in user's home directory.
+" For global use, copy this file to /etc/vim/vimrc.local on Debian.
+
+" If the text in this file is being pasted into vim, consider running
+" the following command to prevent vim from screwing up the format:
+" :set pasted
+
+" If copying using the mouse, consider hiding line numbers.
+" :set nonumber
+
+" If missing, download 'plug.vim' and put it in the 'autoload' directory.
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+call plug#begin()
+Plug 'vim-scripts/AutoComplPop'  " basic autocomplete popup
+Plug 'dense-analysis/ale'  " provide linting -- pip install flake8
+Plug 'NLKNguyen/papercolor-theme' " color scheme
+Plug 'lambdalisue/fern.vim'  " file tree (left pane) / tag tree (right pane)
+Plug 'preservim/tagbar'  " apt install univeral-ctags
+Plug 'ap/vim-buftabline'  " lists buffers (open files) at the top of the screen
+call plug#end()
+
+" :PlugInstall to install the plugins
+" :PlugUpdate to install or update the plugins
+" :PlugDiff to review the changes from the last update
+" :PlugClean to remove plugins no longer in the list
+
+" Promote consistent behavior for "sudo vim"...
+" ...when used in /etc/vim/vimrc.local (on Debian).
+unlet! skip_defaults_vim
+source $VIMRUNTIME/defaults.vim
+let skip_defaults_vim = 1
+
+" Suppress fern incompatibility warning.
+let g:fern_disable_startup_warnings = 1
+
+" These settings are for the autocomplete popup.
+" set completeopt=menu,menuone,longest,noinsert,noselect,preview,popup,fuzzy
+" ALE may force 'noinsert' or override 'longest'.
+" let g:acp_behaviorKeywordLength=3  " length triggering popup defaults to 2
+
+" Spell Check 
+" In command mode:
+"   \s toggles spell check. 
+"   ]s or [s goes to next or previous mispelled word.
+"   z= displays suggested spelling.
+" In insert mode, ^X^K pops-up suggested spelling.
+nmap<leader>s :setlocal spell! <CR>
+
+" Tab or Enter accepts autocomplete.  Space cancels autocomplete.
+inoremap <expr> <Tab> pumvisible() ? "\<C-Y>" : "\<Tab>"
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+
+" ALE will strip trailing spaces on save.
+let g:ale_fixers = {
+  \ 'python': ['trim_whitespace', 'remove_trailing_lines'],
+  \ 'text': ['trim_whitespace', 'remove_trailing_lines'],
+  \}
+let g:ale_fix_on_save = 1
+
+" ALE will use flake8 for linting (if it's installed).
+let g:ale_linters = {'python': ['flake8']}
+
+" Aesthetics
+set t_Co=256  " Enable use of 256 colors (for use with color schemes).
+set background=dark
+colorscheme PaperColor
+set colorcolumn=73  " Display vertical line at specified column.
+
+" Expand tabs to spaces and define their widths.
+" Tab = 4 spaces for Python; otherwise 2 spaces (no tabs).
+set autoindent
+set tabstop=2 shiftwidth=2 expandtab
+autocmd FileType py setlocal tabstop=4 shiftwidth=4 expandtab
+
+" Prevent buffers that go to 'hidden' from initiating a 'save' prompt.
+set hidden
+
+" Switch between buffers using Ctrl+N or Ctrl+P
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+
+" Directly select buffer by using backslash + number.
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)
+
+" Initially disable mouse, then allow toggle using "\m".
+set mouse=
+map <silent> <Leader>m <ESC>
+  \ :exec &mouse!=""? "set mouse=" : "set mouse=nvi"<CR>
+
+" Toggle - \f file tree, \t tag (symbol) tree, \n line numbering
+nnoremap <leader>f :Fern . -drawer -toggle<CR>  " toggle file tree
+nnoremap <leader>t :TagbarToggle<CR>  " toggle symbol tree
+nnoremap <leader>n :set nonumber!<CR>  " toggle line numbering
