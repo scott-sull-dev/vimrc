@@ -21,6 +21,7 @@ Plug 'NLKNguyen/papercolor-theme' " color scheme
 Plug 'lambdalisue/fern.vim'  " file tree (left pane) / tag tree (right pane)
 Plug 'preservim/tagbar'  " apt install univeral-ctags
 Plug 'ap/vim-buftabline'  " lists buffers (open files) at the top of the screen
+Plug 'tpope/vim-fugitive'  " git wrapper
 call plug#end()
 
 " :PlugInstall to install the plugins
