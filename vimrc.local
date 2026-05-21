@@ -22,6 +22,8 @@ Plug 'lambdalisue/fern.vim'  " file tree (left pane) / tag tree (right pane)
 Plug 'preservim/tagbar'  " apt install univeral-ctags
 Plug 'ap/vim-buftabline'  " lists buffers (open files) at the top of the screen
 Plug 'tpope/vim-fugitive'  " git wrapper
+" Plug 'github/copilot.vim'  " plugin for AI code assist
+" Plug 'DanBradbury/copilot-chat.vim'  " plugin for AI chat
 call plug#end()
 
 " :PlugInstall to install the plugins
