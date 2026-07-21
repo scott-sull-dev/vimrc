@@ -3,7 +3,7 @@
 
 " If the text in this file is being pasted into vim, consider running
 " the following command to prevent vim from screwing up the format:
-" :set pasted
+" :set paste
 
 " If copying using the mouse, consider hiding line numbers.
 " :set nonumber
