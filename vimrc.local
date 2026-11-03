@@ -107,3 +107,6 @@ map <silent> <Leader>m <ESC>
 nnoremap <leader>f :Fern . -drawer -toggle<CR>  " toggle file tree
 nnoremap <leader>t :TagbarToggle<CR>  " toggle symbol tree
 nnoremap <leader>n :set nonumber!<CR>  " toggle line numbering
+
+" Assign F5 to execute the current file with Python 3.
+nnoremap <F5> :!python3 %<CR>
